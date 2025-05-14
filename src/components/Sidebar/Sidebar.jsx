@@ -21,7 +21,7 @@ const Sidebar = () => {
         ${isOpen ? 'w-72 px-4' : 'w-16 px-2'} pt-6 flex flex-col justify-between`}
       >
         {/* Top Section */}
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-4">
           {/* Logo & Toggle */}
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
@@ -44,11 +44,13 @@ const Sidebar = () => {
           </div>
 
           {/* Chat Preview */}
+          {isOpen && <p className="border-b bg-transparent pb-2">Recent</p>}
           <div
             className={`inline-flex items-center gap-3 cursor-pointer rounded-xl hover:bg-[#e6eaf5] p-3
               transition-all duration-300 ease-in-out hover:shadow-md
               ${!isOpen && 'justify-center'}`}
           >
+            {/* {isOpen && <p className="">Recent</p>} */}
             <MdChat className="w-5 h-5 text-gray-700" />
             {isOpen && <p className="text-lg text-gray-800">Hello User...</p>}
           </div>
