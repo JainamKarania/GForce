@@ -66,14 +66,14 @@ const Content = () => {
         </div>
         <div className="absolute bottom-0 w-full p-5 mx-auto max-w-4xl">
           <div className="flex items-center justify-between bg-[#f0f4f9] gap-5 px-2 py-4 rounded-[50px]">
-            <input type="text" placeholder="Start your Journey here..........."/>
-            <div className="flex">
+            <input className="flex-1 bg-transparent border-none outline-none text-sm" type="text" placeholder="Enter your prompt..."/>
+            <div className="flex items-center gap-2">
               <MdPhoto className="w-6 cursor-pointer"/>
               <MdMic className="w-6 cursor-pointer"/>
               <MdSend className="w-6 cursor-pointer"/>
             </div>
           </div>
-          <p className="">
+          <p className="text-sm mt-3 mb-0 text-center font-light">
             Gforce may display inaccurate information about people, places, or things.
           </p>
         </div>
