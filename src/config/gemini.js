@@ -1,4 +1,4 @@
-const GEMINI_API_KEY = "AIzaSyAkU-SIgmlnTeMETv_gxajd9LKTS3YxsD8";
+const GEMINI_API_KEY = "";
 
 // To run this code you need to install the following dependencies:
 // npm install @google/genai mime dotenv
