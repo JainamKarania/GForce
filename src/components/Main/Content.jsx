@@ -1,4 +1,5 @@
 import React from "react";
+import { useContext } from "react";
 import {
   FaCode,
   FaCompass,
@@ -8,8 +9,22 @@ import {
 } from "react-icons/fa";
 import user from "../../assets/avatar.avif";
 import { MdBrowseGallery, MdMic, MdPhoto, MdSend } from "react-icons/md";
+import { Context } from "../../context/Context";
 
 const Content = () => {
+  
+  const {prevPrompts,
+      setPrevPrompts,
+      onSent,
+      setRecentPrompt,
+      recentPrompt,
+      response,
+      loading,
+      responseData,
+      input,
+      setInput,} = useContext(Context);
+
+
   return (
     <div className="flex-1 min-h-screen pb-[15vh] relative w-full">
       <div className="flex items-center justify-between text-xl p-5 text-[#585858]">
@@ -66,11 +81,11 @@ const Content = () => {
         </div>
         <div className="absolute bottom-0 w-full p-5 mx-auto max-w-4xl">
           <div className="flex items-center justify-between bg-[#f0f4f9] gap-5 px-2 py-4 rounded-[50px]">
-            <input className="flex-1 bg-transparent border-none outline-none text-sm" type="text" placeholder="Enter your prompt..."/>
+            <input onChange={(e) => setInput(e.target.value)} value={input} className="flex-1 bg-transparent border-none outline-none text-sm" type="text" placeholder="Enter your prompt..."/>
             <div className="flex items-center gap-2">
               <MdPhoto className="w-6 cursor-pointer"/>
               <MdMic className="w-6 cursor-pointer"/>
-              <MdSend className="w-6 cursor-pointer"/>
+              <MdSend onClick={()=> onSent()} className="w-6 cursor-pointer"/>
             </div>
           </div>
           <p className="text-sm mt-3 mb-0 text-center font-light">
