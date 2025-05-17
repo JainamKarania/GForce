@@ -1,15 +1,10 @@
-const GEMINI_API_KEY = "";
+const GEMINI_API_KEY = ""; // Add your key here later
 
-// To run this code you need to install the following dependencies:
-// npm install @google/genai mime dotenv
-
-import { 
-    GoogleGenAI 
- } from '@google/genai'; // Optional: if using .env file
+import { GoogleGenAI } from '@google/genai';
 
 async function main(prompt) {
   const ai = new GoogleGenAI({
-    apiKey: GEMINI_API_KEY, // Make sure GEMINI_API_KEY is set in your environment
+    apiKey: GEMINI_API_KEY,
   });
 
   const config = {
@@ -23,7 +18,7 @@ async function main(prompt) {
       role: 'user',
       parts: [
         {
-          text: prompt, // Replace this with your actual prompt
+          text: prompt,
         },
       ],
     },
@@ -35,11 +30,13 @@ async function main(prompt) {
     contents,
   });
 
-  for await (const chunk of response) {
-    console.log(chunk.text);
-  }
-}
+  let fullResponse = "";
 
-// main().catch(console.error);
+  for await (const chunk of response) {
+    fullResponse += chunk.text || "";
+  }
+
+  return `<p>${fullResponse}</p>`; // ✅ Wrap it in HTML for rendering
+}
 
 export default main;

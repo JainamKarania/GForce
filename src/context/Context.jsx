@@ -14,7 +14,15 @@ const ContextProvider = (props) => {
 
 
     const onSent =async(prompt) => {
-       await main(input)
+      //  await main(input)
+      setResponseData("");
+      setLoading(true);
+      setResponse(true);
+      setRecentPrompt(input);
+      const res = await main(input);
+      setResponseData(res);
+      setLoading(false);
+      setInput("");
     }
     
     // onSent("What is NextJS?")
