@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState , useContext} from 'react';
 import {
   MdAdd,
   MdChat,
@@ -7,11 +7,19 @@ import {
   MdMenu,
   MdSettings,
 } from 'react-icons/md';
+import { Context } from '../../context/Context';
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(true);
 
   const toggleSidebar = () => setIsOpen(!isOpen);
+
+  const {onSent , prevPrompts , setRecentPrompt} = useContext(Context);
+
+  const loadPrompt = async (prompt) => {
+    setRecentPrompt(prompt);
+    await onSent(prompt);
+  }
 
   return (
     <div className="flex">
@@ -45,15 +53,20 @@ const Sidebar = () => {
 
           {/* Chat Preview */}
           {isOpen && <p className="border-b bg-transparent pb-2">Recent</p>}
-          <div
-            className={`inline-flex items-center gap-3 cursor-pointer rounded-xl hover:bg-[#e6eaf5] p-3
-              transition-all duration-300 ease-in-out hover:shadow-md
-              ${!isOpen && 'justify-center'}`}
-          >
-            {/* {isOpen && <p className="">Recent</p>} */}
-            <MdChat className="w-5 h-5 text-gray-700" />
-            {isOpen && <p className="text-lg text-gray-800">Hello User...</p>}
-          </div>
+          {prevPrompts.map((prompt, index) => (
+            <div
+              key={index}
+              className={`inline-flex items-center gap-3 cursor-pointer rounded-xl hover:bg-[#e6eaf5] p-3
+                transition-all duration-300 ease-in-out hover:shadow-md
+                ${!isOpen && 'justify-center'}`}
+              onClick={() => {
+                loadPrompt(prompt);
+              }}
+            >
+              <MdChat className="w-5 h-5 text-gray-700" />
+              {isOpen && <p className="text-lg text-gray-800">{prompt.slice(0,18)}...</p>}
+            </div>
+          ))}
         </div>
 
         {/* Bottom Section */}

@@ -1,6 +1,6 @@
 import React from "react";
 import { useContext } from "react";
-import {motion} from "framer-motion";
+import { motion } from "framer-motion";
 import {
   FaCode,
   FaCompass,
@@ -11,7 +11,7 @@ import {
 import user from "../../assets/avatar.avif";
 import { MdBrowseGallery, MdMic, MdPhoto, MdSend } from "react-icons/md";
 import { Context } from "../../context/Context";
-import { GiGemini } from "react-icons/gi";
+import { GiGemini, GiLion, GiTigerHead } from "react-icons/gi";
 
 const Content = () => {
   const {
@@ -86,23 +86,26 @@ const Content = () => {
             </div>
           </>
         ) : (
-          <div className="flex flex-col gap-4 px-4 py-6">
-            {/* User Prompt */}
-            <div className="flex items-start gap-3">
-              <img
-                src={user}
-                alt="User avatar"
-                className="w-8 h-8 object-cover rounded-full"
-              />
-              <div className="bg-[#e0e7ff] dark:bg-[#2c2c3e] px-4 py-3 rounded-2xl max-w-[80%] shadow-sm">
-                <p className="text-sm text-gray-800 dark:text-gray-200">
+          <div className="flex flex-col gap-6 px-4 py-6">
+            {/* USER PROMPT (right‑aligned) */}
+            <div className="flex items-start justify-end gap-3">
+              {/* prompt bubble */}
+              <div className="bg-[#e0e7ff] dark:bg-[#2c2c3e] px-4 py-3 rounded-2xl max-w-[80%] shadow-sm order-1">
+                <p className="text-sm text-gray-800 dark:text-gray-200 break-words">
                   {recentPrompt}
                 </p>
               </div>
+              {/* user avatar */}
+              <img
+                src={user}
+                alt="User avatar"
+                className="w-8 h-8 object-cover rounded-full order-2"
+              />
             </div>
 
-            {/* AI Response */}
+            {/* AI RESPONSE (left‑aligned) */}
             <div className="flex items-start gap-3">
+              {/* animated bot avatar */}
               <motion.div
                 initial={{ scale: 1 }}
                 animate={{ scale: [1, 1.12, 1] }}
@@ -111,12 +114,34 @@ const Content = () => {
                   ease: "easeInOut",
                   repeat: Infinity,
                 }}
-                className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-sm shadow-md"
+                className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white shadow-md shrink-0"
               >
-                G
+                <GiTigerHead className="w-5 h-5" />
               </motion.div>
+
+              {/* AI bubble */}
               <div className="bg-[#f8fafc] dark:bg-[#1f2937] px-4 py-3 rounded-2xl max-w-[90%] shadow-md text-sm text-gray-800 dark:text-gray-100 leading-relaxed">
-                <div dangerouslySetInnerHTML={{ __html: responseData }} />
+                {loading ? (
+                  /* Typing dots animation */
+                  <div className="flex gap-1">
+                    {["", "", ""].map((_, i) => (
+                      <motion.span
+                        key={i}
+                        className="w-2 h-2 bg-gray-400 dark:bg-gray-500 rounded-full"
+                        animate={{ y: [0, -4, 0] }}
+                        transition={{
+                          duration: 0.8,
+                          repeat: Infinity,
+                          ease: "easeInOut",
+                          delay: i * 0.15, // stagger the three dots
+                        }}
+                      />
+                    ))}
+                  </div>
+                ) : (
+                  /* The real response once ready */
+                  <div dangerouslySetInnerHTML={{ __html: responseData }} />
+                )}
               </div>
             </div>
           </div>
