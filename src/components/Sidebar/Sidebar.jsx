@@ -14,12 +14,14 @@ const Sidebar = () => {
 
   const toggleSidebar = () => setIsOpen(!isOpen);
 
-  const {onSent , prevPrompts , setRecentPrompt} = useContext(Context);
+  const {onSent , prevPrompts , setRecentPrompt, newChat} = useContext(Context);
 
   const loadPrompt = async (prompt) => {
-    setRecentPrompt(prompt);
-    await onSent(prompt);
-  }
+  // immediately show it in the input (optional)
+  setRecentPrompt(prompt);
+  await onSent(prompt);
+};
+
 
   return (
     <div className="flex">
@@ -46,6 +48,7 @@ const Sidebar = () => {
             className={`inline-flex items-center gap-3 cursor-pointer rounded-xl bg-[#e6eaf5] p-3
               hover:bg-[#dbe2f0] transition-all duration-300 ease-in-out hover:shadow-md
               ${!isOpen && 'justify-center'}`}
+            onClick={() => newChat()}
           >
             <MdAdd className="w-5 h-5 text-gray-700" />
             {isOpen && <p className="text-lg text-gray-800">New Chat</p>}
@@ -58,13 +61,13 @@ const Sidebar = () => {
               key={index}
               className={`inline-flex items-center gap-3 cursor-pointer rounded-xl hover:bg-[#e6eaf5] p-3
                 transition-all duration-300 ease-in-out hover:shadow-md
-                ${!isOpen && 'justify-center'}`}
+                `}
               onClick={() => {
                 loadPrompt(prompt);
               }}
             >
               <MdChat className="w-5 h-5 text-gray-700" />
-              {isOpen && <p className="text-lg text-gray-800">{prompt.slice(0,18)}...</p>}
+              {isOpen && <p className="text-lg text-gray-800">{prompt?.length > 18 ? `${prompt.slice(0, 18)}…` : prompt}</p>}
             </div>
           ))}
         </div>
