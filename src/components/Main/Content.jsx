@@ -154,7 +154,7 @@ const Content = () => {
               value={input}
               className="flex-1 bg-transparent border-none outline-none text-sm"
               type="text"
-              placeholder="Enter your prompt..."
+              placeholder="Ask anything..."
             />
             <div className="flex items-center gap-2">
               <MdPhoto className="w-6 cursor-pointer" />
